@@ -33,7 +33,6 @@ Considero que esta API puede ser de mucha utilidad a la hora de guardar document
     - Propiedades:
         - `idPez` **(Tipo: Long)**: El ID del pez correspondiente, autogenerado por la base de datos.
         - `idInvestigador` **(Tipo: Long)**: El ID del usuario que descubrió este pez.
-        - `nombreInvestigador` **(Tipo: String)**: El nombre del usuario que descubrió este pez.
         - `nombreComun` **(Tipo: String)**: El nombre común del pez.
             **RESTRICCIÓN:**
                 - No puede estar vacío.
@@ -66,7 +65,6 @@ Considero que esta API puede ser de mucha utilidad a la hora de guardar document
     - Propiedades:
         - `idInvestigacion` **(Tipo: Long)**: El ID de la investigación correspondiente, autogenerado por la base de datos.
         - `idInvestigador` **(Tipo: Long)**: El ID del usuario que descubrió este pez.
-        - `nombreInvestigador` **(Tipo: String)**: El nombre del usuario que descubrió este pez.
         - `peces` **(Tipo: List<Pez>)**: Una lista de los peces vistos durante la investigación.
         - `titulo` **(Tipo: String)**: El título de la investigación.
             **RESTRICCIÓN:**
