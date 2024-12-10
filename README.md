@@ -81,3 +81,38 @@ Considero que esta API puede ser de mucha utilidad a la hora de guardar document
         - `hora` **(Tipo: LocalTime)**: Hora de la investigación.
             **RESTRICCIÓN:**
                 - No puede ser null.
+
+## **Endpoints**
+
+1. **Endpoints para Usuarios**
+    - **POST** `{/usuarios/login}`: Endpoint utilizado para hacer login con un usuario ya registrado, introduciendo su nombre y contraseña, devuelve un token válido de su sesión generada.
+      - *RUTA PÚBLICA*: Cualquier usuario puede acceder a este endpoint.
+    - **POST** `{/usuarios/register}`: Endpoint utilizado para generar un usuario nuevo, proveyendo sus datos en JSON.
+      - *RUTA PÚBLICA*: Cualquier usuario puede acceder a este endpoint.
+
+2. **Endpoints para Peces**
+    - **GET** `{/peces/{idPez}}`: Endpoint utilizado para recibir la información de un pez específico, proveyendo el ID del pez en cuestión.
+      - *RUTA PROTEGIDA* **AUTHENTICATED** Sólo usuarios correctamente autenticados pueden acceder a este recurso.
+    - **GET** `{/peces/}`: Endpoint utilizado para recibir la información de todos los peces registrados en la base de datos.
+      - *RUTA PROTEGIDA* **AUTHENTICATED** Sólo usuarios correctamente autenticados pueden acceder a este recurso.
+    - **POST** `{/peces/}`: Endpoint utilizado para insertar un nuevo pez a la base de datos, proveyendo la información del pez adecuadamente en formato JSON.
+      - *RUTA PROTEGIDA* **ROL ADMIN** Usuarios con `ROL ADMIN` pueden acceder al recurso libremente.
+    - **PUT** `{/peces/{idPez}}`: Endpoint utilizado para actualizar un pez ya existente en la base de datos, proveyendo el ID del pez a actualizar así como sus nuevos datos en formato JSON.
+      - *RUTA PROTEGIDA* **ROL ADMIN** Usuarios con `ROL ADMIN` pueden acceder al recurso libremente.
+    - **DELETE** `{/peces/{idPez}}`: Endpoint utilizado para eliminar un pez ya existente en la base de datos, proveyendo el ID del pez a eliminar.
+      - *RUTA PROTEGIDA* **ROL ADMIN** Usuarios con `ROL ADMIN` pueden acceder al recurso libremente.
+
+3. **Endpoints para Investigaciones**
+    - **GET** `{/investigaciones/{idInvestigacion}}`: Endpoint utilizado para recibir la información de una investigación específica, proveyendo el ID de la investigación en cuestión.
+      - *RUTA PROTEGIDA* **ROL ADMIN** Usuarios con `ROL ADMIN` pueden acceder al recurso libremente.
+      - *RUTA PROTEGIDA* **ROL USER** Sólo usuarios con `ROL USER` cuyo ID de usuario coincidan con el ID de usuario de la investigación pueden acceder a este recurso.
+    - **GET** `{/investigaciones/}`: Endpoint utilizado para recibir la información de todas las investigaciones de la base de datos.
+      - *RUTA PROTEGIDA* **ROL ADMIN** Usuarios con `ROL ADMIN` pueden acceder al recurso libremente.
+    - **POST** `{/investigaciones/}`: Endpoint utilizado para insertar una nueva investigación a la base de datos, proveyendo la información de la investigación adecuadamente en formato JSON.
+      - *RUTA PROTEGIDA* **AUTHENTICATED** Sólo usuarios correctamente autenticados pueden acceder a este recurso.
+    - **PUT** `{/investigaciones/{idInvestigacion}}`: Endpoint utilizado para actualizar una investigación ya existente en la base de datos, proveyendo el ID de la investigación a actualizar así como sus nuevos datos en formato JSON.
+      - *RUTA PROTEGIDA* **ROL ADMIN** Usuarios con `ROL ADMIN` pueden acceder al recurso libremente.
+      - *RUTA PROTEGIDA* **ROL USER** Sólo usuarios con `ROL USER` cuyo ID de usuario coincidan con el ID de usuario de la investigación pueden acceder a este recurso.
+    - **DELETE** `{/investigaciones/{idInvestigacion}}`: Endpoint utilizado para eliminar una investigación ya existente en la base de datos, proveyendo el ID de la investigación a eliminar.
+      - *RUTA PROTEGIDA* **ROL ADMIN** Usuarios con `ROL ADMIN` pueden acceder al recurso libremente.
+      - *RUTA PROTEGIDA* **ROL USER** Sólo usuarios con `ROL USER` cuyo ID de usuario coincidan con el ID de usuario de la investigación pueden acceder a este recurso.
