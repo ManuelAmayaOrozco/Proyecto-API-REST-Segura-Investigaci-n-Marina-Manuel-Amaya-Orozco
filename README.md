@@ -33,6 +33,7 @@ Considero que esta API puede ser de mucha utilidad a la hora de guardar document
     - Propiedades:
         - `idPez` **(Tipo: Long)**: El ID del pez correspondiente, autogenerado por la base de datos.
         - `idInvestigador` **(Tipo: Long)**: El ID del usuario que descubrió este pez.
+        - `apariciones` **(Tipo: List\<Investigacion>\)**: Una lista de las investigaciones en las que aparece este pez.
         - `nombreComun` **(Tipo: String)**: El nombre común del pez.
             **RESTRICCIÓN:**
                 - No puede estar vacío.
@@ -143,6 +144,7 @@ Considero que esta API puede ser de mucha utilidad a la hora de guardar document
 |-------------------------|---------------------------------------------------------------------------|--------------|------------------------------------------------------------------------------------------------------------------------|
 | `idPez`                 | No puede estar vacío. (Excepto al hacer un POST o GETALL).                | 400          | "El ID del pez no puede estar vacío."                                                                                  |
 | `idInvestigador`        | No puede estar vacío./Ha de ser un ID válido.                             | 400/404      | "El ID del investigador no puede estar vacío."/"El ID introducido no coincide con ningún usuario de la base de datos." |
+| `apariciones`           | La investigación debe de haber sido registrada previamente.               | 404          | "No se ha encontrado una de las investigaciones dentro de la base de datos."                                           |
 | `nombreComun`           | No puede estar vacío.                                                     | 400          | "El nombre común del pez no puede estar vacío"                                                                         |
 | `nombreCientífico`      | No puede estar vacío.                                                     | 400          | "El nombre científico del pez no puede estar vacío."                                                                   |
 | `especie`               | No puede estar vacía.                                                     | 400          | "La especie del pez no puede estar vacía."                                                                             |
