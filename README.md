@@ -85,44 +85,44 @@ Considero que esta API puede ser de mucha utilidad a la hora de guardar document
 ## **Endpoints**
 
 1. **Endpoints para Usuarios**
-    - **GET** `{/usuarios/{idUser}}`: Endpoint utilizado para recibir la información de un usuario específico, proveyendo el ID del usuario en cuestión.
+    - **GET** `{/usuarios/{idUser}}`: Endpoint utilizado para recibir la información de un usuario específico, proveyendo el ID del usuario en cuestión. Devuelve el usuario indicado por el ID.
       - *RUTA PROTEGIDA* **ROL ADMIN** Usuarios con `ROL ADMIN` pueden acceder al recurso libremente.
       - *RUTA PROTEGIDA* **ROL USER** Sólo usuarios con `ROL USER` cuyo ID de usuario coincidan con el ID del usuario a obtener pueden acceder a este recurso.
-    - **GET** `{/usuarios/}`: Endpoint utilizado para recibir la información de todos los usuarios registrados en la base de datos.
+    - **GET** `{/usuarios/}`: Endpoint utilizado para recibir la información de todos los usuarios registrados en la base de datos. Devuelve una lista con todos los usuarios de la base de datos.
       - *RUTA PROTEGIDA* **ROL ADMIN** Usuarios con `ROL ADMIN` pueden acceder al recurso libremente.
-    - **POST** `{/usuarios/login}`: Endpoint utilizado para hacer login con un usuario ya registrado, introduciendo su nombre y contraseña, devuelve un token válido de su sesión generada.
+    - **POST** `{/usuarios/login}`: Endpoint utilizado para hacer login con un usuario ya registrado, introduciendo su nombre y contraseña. Devuelve un token válido de su sesión generada.
       - *RUTA PÚBLICA*: Cualquier usuario puede acceder a este endpoint.
-    - **POST** `{/usuarios/register}`: Endpoint utilizado para generar un usuario nuevo, proveyendo sus datos en JSON.
+    - **POST** `{/usuarios/register}`: Endpoint utilizado para generar un usuario nuevo, proveyendo sus datos en JSON. Devuelve el usuario registrado en la base de datos.
       - *RUTA PÚBLICA*: Cualquier usuario puede acceder a este endpoint.
-    - **PUT** `{/usuarios/{idUser}}`: Endpoint utilizado para actualizar un usuario ya existente en la base de datos, proveyendo el ID del usuario a actualizar así como sus nuevos datos en formato JSON.
+    - **PUT** `{/usuarios/{idUser}}`: Endpoint utilizado para actualizar un usuario ya existente en la base de datos, proveyendo el ID del usuario a actualizar así como sus nuevos datos en formato JSON. Devuelve el usuario actualizado en la base de datos.
       - *RUTA PROTEGIDA* **ROL ADMIN** Usuarios con `ROL ADMIN` pueden acceder al recurso libremente.
-    - **DELETE** `{/usuarios/{idUser}}`: Endpoint utilizado para eliminar un usuario ya existente en la base de datos, proveyendo el ID del usuario a eliminar.
+    - **DELETE** `{/usuarios/{idUser}}`: Endpoint utilizado para eliminar un usuario ya existente en la base de datos, proveyendo el ID del usuario a eliminar. No devuelve nada, solo te avisa que la eliminación del usuario fue correcta.
       - *RUTA PROTEGIDA* **ROL ADMIN** Usuarios con `ROL ADMIN` pueden acceder al recurso libremente.
 
 3. **Endpoints para Peces**
-    - **GET** `{/peces/{idPez}}`: Endpoint utilizado para recibir la información de un pez específico, proveyendo el ID del pez en cuestión.
+    - **GET** `{/peces/{idPez}}`: Endpoint utilizado para recibir la información de un pez específico, proveyendo el ID del pez en cuestión. Devuelve el pez indicado por el ID.
       - *RUTA PROTEGIDA* **AUTHENTICATED** Sólo usuarios correctamente autenticados pueden acceder a este recurso.
-    - **GET** `{/peces/}`: Endpoint utilizado para recibir la información de todos los peces registrados en la base de datos.
+    - **GET** `{/peces/}`: Endpoint utilizado para recibir la información de todos los peces registrados en la base de datos. Devuelve una lista con todos los peces de la base de datos.
       - *RUTA PROTEGIDA* **AUTHENTICATED** Sólo usuarios correctamente autenticados pueden acceder a este recurso.
-    - **POST** `{/peces/}`: Endpoint utilizado para insertar un nuevo pez a la base de datos, proveyendo la información del pez adecuadamente en formato JSON.
+    - **POST** `{/peces/}`: Endpoint utilizado para insertar un nuevo pez a la base de datos, proveyendo la información del pez adecuadamente en formato JSON. Devuelve el pez registrado en la base de datos.
       - *RUTA PROTEGIDA* **ROL ADMIN** Usuarios con `ROL ADMIN` pueden acceder al recurso libremente.
-    - **PUT** `{/peces/{idPez}}`: Endpoint utilizado para actualizar un pez ya existente en la base de datos, proveyendo el ID del pez a actualizar así como sus nuevos datos en formato JSON.
+    - **PUT** `{/peces/{idPez}}`: Endpoint utilizado para actualizar un pez ya existente en la base de datos, proveyendo el ID del pez a actualizar así como sus nuevos datos en formato JSON. Devuelve el pez actualizado en la base de datos.
       - *RUTA PROTEGIDA* **ROL ADMIN** Usuarios con `ROL ADMIN` pueden acceder al recurso libremente.
-    - **DELETE** `{/peces/{idPez}}`: Endpoint utilizado para eliminar un pez ya existente en la base de datos, proveyendo el ID del pez a eliminar.
+    - **DELETE** `{/peces/{idPez}}`: Endpoint utilizado para eliminar un pez ya existente en la base de datos, proveyendo el ID del pez a eliminar. No devuelve nada, solo te avisa que la eliminación del pez fue correcta.
       - *RUTA PROTEGIDA* **ROL ADMIN** Usuarios con `ROL ADMIN` pueden acceder al recurso libremente.
 
 4. **Endpoints para Investigaciones**
-    - **GET** `{/investigaciones/{idInvestigacion}}`: Endpoint utilizado para recibir la información de una investigación específica, proveyendo el ID de la investigación en cuestión.
+    - **GET** `{/investigaciones/{idInvestigacion}}`: Endpoint utilizado para recibir la información de una investigación específica, proveyendo el ID de la investigación en cuestión. Devuelve la investigación indicada por el ID.
       - *RUTA PROTEGIDA* **ROL ADMIN** Usuarios con `ROL ADMIN` pueden acceder al recurso libremente.
-      - *RUTA PROTEGIDA* **ROL USER** Sólo usuarios con `ROL USER` cuyo ID de usuario coincidan con el ID de usuario de la investigación pueden acceder a este recurso.
+      - *RUTA PROTEGIDA* **ROL USER** Sólo usuarios con `ROL USER` cuyo ID de usuario coincidan con el ID de usuario de la investigación pueden acceder a este recurso. Devuelve una lista con todas las investigaciones de la base de datos.
     - **GET** `{/investigaciones/}`: Endpoint utilizado para recibir la información de todas las investigaciones de la base de datos.
       - *RUTA PROTEGIDA* **ROL ADMIN** Usuarios con `ROL ADMIN` pueden acceder al recurso libremente.
-    - **POST** `{/investigaciones/}`: Endpoint utilizado para insertar una nueva investigación a la base de datos, proveyendo la información de la investigación adecuadamente en formato JSON.
+    - **POST** `{/investigaciones/}`: Endpoint utilizado para insertar una nueva investigación a la base de datos, proveyendo la información de la investigación adecuadamente en formato JSON. Devuelve la investigación registrada en la base de datos.
       - *RUTA PROTEGIDA* **AUTHENTICATED** Sólo usuarios correctamente autenticados pueden acceder a este recurso.
-    - **PUT** `{/investigaciones/{idInvestigacion}}`: Endpoint utilizado para actualizar una investigación ya existente en la base de datos, proveyendo el ID de la investigación a actualizar así como sus nuevos datos en formato JSON.
+    - **PUT** `{/investigaciones/{idInvestigacion}}`: Endpoint utilizado para actualizar una investigación ya existente en la base de datos, proveyendo el ID de la investigación a actualizar así como sus nuevos datos en formato JSON. Devuelve la investigación                                                                 actualizada en la base de datos.
       - *RUTA PROTEGIDA* **ROL ADMIN** Usuarios con `ROL ADMIN` pueden acceder al recurso libremente.
       - *RUTA PROTEGIDA* **ROL USER** Sólo usuarios con `ROL USER` cuyo ID de usuario coincidan con el ID de usuario de la investigación pueden acceder a este recurso.
-    - **DELETE** `{/investigaciones/{idInvestigacion}}`: Endpoint utilizado para eliminar una investigación ya existente en la base de datos, proveyendo el ID de la investigación a eliminar.
+    - **DELETE** `{/investigaciones/{idInvestigacion}}`: Endpoint utilizado para eliminar una investigación ya existente en la base de datos, proveyendo el ID de la investigación a eliminar. No devuelve nada, solo te avisa que la eliminación de la investigación fue                                                              correcta.
       - *RUTA PROTEGIDA* **ROL ADMIN** Usuarios con `ROL ADMIN` pueden acceder al recurso libremente.
       - *RUTA PROTEGIDA* **ROL USER** Sólo usuarios con `ROL USER` cuyo ID de usuario coincidan con el ID de usuario de la investigación pueden acceder a este recurso.
      
