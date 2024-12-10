@@ -45,7 +45,7 @@ Considero que esta API puede ser de mucha utilidad a la hora de guardar document
         - `dieta` **(Tipo: String)**: La dieta del pez.
             **RESTRICCIÓN:**
                 - No puede estar vacío.
-        - `nombreComun` **(Tipo: String)**: Una breve descripción del pez.
+        - `descripcion` **(Tipo: String)**: Una breve descripción del pez.
             **RESTRICCIÓN:**
                 - No puede estar vacío.
         - `ejemplares` **(Tipo: Int)**: El número de ejemplares vistos en libertad.
