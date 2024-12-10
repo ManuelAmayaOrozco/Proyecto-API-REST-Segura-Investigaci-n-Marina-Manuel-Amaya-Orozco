@@ -165,6 +165,21 @@ Considero que esta API puede ser de mucha utilidad a la hora de guardar document
 | `fecha`                 | No puede ser null.                                                        | 400          | "La fecha de la investigación no puede ser null."                                                                      |
 | `hora`                  | No puede ser null.                                                        | 400          | "La hora de la investigación no puede ser null."                                                                       |
 
+## **Códigos de Respuesta**
+
+    - Operaciones exitosas:
+
+        - **201 Created**: Creación de recursos exitosos (POST excepto Login).
+        - **200 OK**: Consultas y actualizaciones exitosas (GET, PUT, Login POST)
+        - **204 No Content**: Eliminación de recursos exitosos (DELETE)
+
+    - Operaciones fallidas:
+
+        - **400 Bad Request**: Errores de validación de la lógica de negocio.
+        - **404 Not Found**: Recursos inexistentes de la lógica de negocio.
+        - **500 Internal Server Error**: Cualquier otro error que ocurra dentro del servidor.
+
+
 ## **Restricciones de Seguridad**
 
 1. **Usuarios:**
