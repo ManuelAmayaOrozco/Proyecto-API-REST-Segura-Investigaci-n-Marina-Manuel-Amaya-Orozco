@@ -2,6 +2,8 @@ package com.es.api_investigacion_marina.Model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "peces")
 public class Pez {
@@ -13,7 +15,10 @@ public class Pez {
 
     @ManyToOne
     @JoinColumn(name = "id_investigador")
-    private Long idInvestigador;
+    private Usuario investigador;
+
+    @ManyToMany(mappedBy = "peces")
+    private List<Investigacion> apariciones;
 
     @Column(name = "nombre_comun")
     private String nombreComun;
@@ -30,16 +35,17 @@ public class Pez {
     private int ejemplares;
 
     @Column(name = "tamaño_maximo")
-    private Double tamMax;
+    private double tamMax;
 
     @Column(name = "peligro_extincion")
     private boolean peligroExtincion;
 
     // Constructores
 
-    public Pez(Long idPez, Long idInvestigador, String nombreComun, String nombreCientifico, String especie, String dieta, String descripcion, int ejemplares, Double tamMax, boolean peligroExtincion) {
+    public Pez(Long idPez, Usuario investigador, List<Investigacion> apariciones, String nombreComun, String nombreCientifico, String especie, String dieta, String descripcion, int ejemplares, Double tamMax, boolean peligroExtincion) {
         this.idPez = idPez;
-        this.idInvestigador = idInvestigador;
+        this.investigador = investigador;
+        this.apariciones = apariciones;
         this.nombreComun = nombreComun;
         this.nombreCientifico = nombreCientifico;
         this.especie = especie;
@@ -50,8 +56,9 @@ public class Pez {
         this.peligroExtincion = peligroExtincion;
     }
 
-    public Pez(Long idInvestigador, String nombreComun, String nombreCientifico, String especie, String dieta, String descripcion, int ejemplares, Double tamMax, boolean peligroExtincion) {
-        this.idInvestigador = idInvestigador;
+    public Pez(Usuario investigador, List<Investigacion> apariciones, String nombreComun, String nombreCientifico, String especie, String dieta, String descripcion, int ejemplares, Double tamMax, boolean peligroExtincion) {
+        this.investigador = investigador;
+        this.apariciones = apariciones;
         this.nombreComun = nombreComun;
         this.nombreCientifico = nombreCientifico;
         this.especie = especie;
@@ -74,12 +81,20 @@ public class Pez {
         this.idPez = idPez;
     }
 
-    public Long getIdInvestigador() {
-        return idInvestigador;
+    public Usuario getInvestigador() {
+        return investigador;
     }
 
-    public void setIdInvestigador(Long idInvestigador) {
-        this.idInvestigador = idInvestigador;
+    public void setInvestigador(Usuario investigador) {
+        this.investigador = investigador;
+    }
+
+    public List<Investigacion> getApariciones() {
+        return apariciones;
+    }
+
+    public void setApariciones(List<Investigacion> apariciones) {
+        this.apariciones = apariciones;
     }
 
     public String getNombreComun() {

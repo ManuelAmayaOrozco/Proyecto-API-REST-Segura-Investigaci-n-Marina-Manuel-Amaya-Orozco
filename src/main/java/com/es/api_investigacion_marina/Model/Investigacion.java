@@ -17,9 +17,12 @@ public class Investigacion {
 
     @ManyToOne
     @JoinColumn(name = "id_investigador")
-    private Long idInvestigador;
+    private Usuario investigador;
 
-    @OneToMany (mappedBy = "investigaciones", fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "investigaciones_peces",
+            joinColumns = @JoinColumn(name = "id_investigacion"),
+            inverseJoinColumns = @JoinColumn(name = "id_pez"))
     private List<Pez> peces;
 
     private String titulo;
@@ -34,9 +37,9 @@ public class Investigacion {
 
     // Constructores
 
-    public Investigacion(Long idInvestigacion, Long idInvestigador, List<Pez> peces, String titulo, String resumen, String lugar, LocalDate fecha, LocalTime hora) {
+    public Investigacion(Long idInvestigacion, Usuario investigador, List<Pez> peces, String titulo, String resumen, String lugar, LocalDate fecha, LocalTime hora) {
         this.idInvestigacion = idInvestigacion;
-        this.idInvestigador = idInvestigador;
+        this.investigador = investigador;
         this.peces = peces;
         this.titulo = titulo;
         this.resumen = resumen;
@@ -45,8 +48,8 @@ public class Investigacion {
         this.hora = hora;
     }
 
-    public Investigacion(Long idInvestigador, List<Pez> peces, String titulo, String resumen, String lugar, LocalDate fecha, LocalTime hora) {
-        this.idInvestigador = idInvestigador;
+    public Investigacion(Usuario investigador, List<Pez> peces, String titulo, String resumen, String lugar, LocalDate fecha, LocalTime hora) {
+        this.investigador = investigador;
         this.peces = peces;
         this.titulo = titulo;
         this.resumen = resumen;
@@ -67,12 +70,12 @@ public class Investigacion {
         this.idInvestigacion = idInvestigacion;
     }
 
-    public Long getIdInvestigador() {
-        return idInvestigador;
+    public Usuario getInvestigador() {
+        return investigador;
     }
 
-    public void setIdInvestigador(Long idInvestigador) {
-        this.idInvestigador = idInvestigador;
+    public void setInvestigador(Usuario investigador) {
+        this.investigador = investigador;
     }
 
     public List<Pez> getPeces() {
