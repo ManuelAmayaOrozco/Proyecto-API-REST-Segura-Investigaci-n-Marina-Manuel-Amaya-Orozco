@@ -169,15 +169,15 @@ Considero que esta API puede ser de mucha utilidad a la hora de guardar document
 
 Operaciones exitosas:
 
-    - **201 Created**: Creación de recursos exitosos (POST excepto Login).
-    - **200 OK**: Consultas y actualizaciones exitosas (GET, PUT, Login POST)
-    - **204 No Content**: Eliminación de recursos exitosos (DELETE)
+**201 Created**: Creación de recursos exitosos (POST excepto Login).
+**200 OK**: Consultas y actualizaciones exitosas (GET, PUT, Login POST)
+**204 No Content**: Eliminación de recursos exitosos (DELETE)
 
 Operaciones fallidas:
 
-    - **400 Bad Request**: Errores de validación de la lógica de negocio.
-    - **404 Not Found**: Recursos inexistentes de la lógica de negocio.
-    - **500 Internal Server Error**: Cualquier otro error que ocurra dentro del servidor.
+**400 Bad Request**: Errores de validación de la lógica de negocio.
+**404 Not Found**: Recursos inexistentes de la lógica de negocio.
+**500 Internal Server Error**: Cualquier otro error que ocurra dentro del servidor.
 
 
 ## **Restricciones de Seguridad**
