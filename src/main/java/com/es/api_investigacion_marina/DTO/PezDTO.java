@@ -45,6 +45,31 @@ public class PezDTO {
         this.peligroExtincion = peligroExtincion;
     }
 
+    public PezDTO(Long idPez, Long idInvestigador, String nombreComun, String nombreCientifico, String especie, String dieta, String descripcion, int ejemplares, double tamMax, boolean peligroExtincion) {
+        this.idPez = idPez;
+        this.idInvestigador = idInvestigador;
+        this.nombreComun = nombreComun;
+        this.nombreCientifico = nombreCientifico;
+        this.especie = especie;
+        this.dieta = dieta;
+        this.descripcion = descripcion;
+        this.ejemplares = ejemplares;
+        this.tamMax = tamMax;
+        this.peligroExtincion = peligroExtincion;
+    }
+
+    public PezDTO(Long idInvestigador, String nombreComun, String nombreCientifico, String especie, String dieta, String descripcion, int ejemplares, double tamMax, boolean peligroExtincion) {
+        this.idInvestigador = idInvestigador;
+        this.nombreComun = nombreComun;
+        this.nombreCientifico = nombreCientifico;
+        this.especie = especie;
+        this.dieta = dieta;
+        this.descripcion = descripcion;
+        this.ejemplares = ejemplares;
+        this.tamMax = tamMax;
+        this.peligroExtincion = peligroExtincion;
+    }
+
     public PezDTO() {}
 
     // Getters y Setters

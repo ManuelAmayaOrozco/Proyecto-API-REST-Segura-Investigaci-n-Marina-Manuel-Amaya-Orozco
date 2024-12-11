@@ -38,6 +38,25 @@ public class InvestigacionDTO {
         this.hora = hora;
     }
 
+    public InvestigacionDTO(Long idInvestigacion, Long idInvestigador, String titulo, String resumen, String lugar, LocalDate fecha, LocalTime hora) {
+        this.idInvestigacion = idInvestigacion;
+        this.idInvestigador = idInvestigador;
+        this.titulo = titulo;
+        this.resumen = resumen;
+        this.lugar = lugar;
+        this.fecha = fecha;
+        this.hora = hora;
+    }
+
+    public InvestigacionDTO(Long idInvestigador, String titulo, String resumen, String lugar, LocalDate fecha, LocalTime hora) {
+        this.idInvestigador = idInvestigador;
+        this.titulo = titulo;
+        this.resumen = resumen;
+        this.lugar = lugar;
+        this.fecha = fecha;
+        this.hora = hora;
+    }
+
     public InvestigacionDTO() {}
 
     // Getters y Setters

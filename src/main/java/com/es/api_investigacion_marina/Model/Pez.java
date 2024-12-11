@@ -30,6 +30,7 @@ public class Pez {
 
     private String dieta;
 
+    @Column(length = 9000)
     private String descripcion;
 
     private int ejemplares;
@@ -59,6 +60,31 @@ public class Pez {
     public Pez(Usuario investigador, List<Investigacion> apariciones, String nombreComun, String nombreCientifico, String especie, String dieta, String descripcion, int ejemplares, Double tamMax, boolean peligroExtincion) {
         this.investigador = investigador;
         this.apariciones = apariciones;
+        this.nombreComun = nombreComun;
+        this.nombreCientifico = nombreCientifico;
+        this.especie = especie;
+        this.dieta = dieta;
+        this.descripcion = descripcion;
+        this.ejemplares = ejemplares;
+        this.tamMax = tamMax;
+        this.peligroExtincion = peligroExtincion;
+    }
+
+    public Pez(Long idPez, Usuario investigador, String nombreComun, String nombreCientifico, String especie, String dieta, String descripcion, int ejemplares, double tamMax, boolean peligroExtincion) {
+        this.idPez = idPez;
+        this.investigador = investigador;
+        this.nombreComun = nombreComun;
+        this.nombreCientifico = nombreCientifico;
+        this.especie = especie;
+        this.dieta = dieta;
+        this.descripcion = descripcion;
+        this.ejemplares = ejemplares;
+        this.tamMax = tamMax;
+        this.peligroExtincion = peligroExtincion;
+    }
+
+    public Pez(Usuario investigador, String nombreComun, String nombreCientifico, String especie, String dieta, String descripcion, int ejemplares, double tamMax, boolean peligroExtincion) {
+        this.investigador = investigador;
         this.nombreComun = nombreComun;
         this.nombreCientifico = nombreCientifico;
         this.especie = especie;

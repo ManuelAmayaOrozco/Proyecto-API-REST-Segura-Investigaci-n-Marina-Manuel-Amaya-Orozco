@@ -27,6 +27,7 @@ public class Investigacion {
 
     private String titulo;
 
+    @Column(length = 9000)
     private String resumen;
 
     private String lugar;
@@ -51,6 +52,25 @@ public class Investigacion {
     public Investigacion(Usuario investigador, List<Pez> peces, String titulo, String resumen, String lugar, LocalDate fecha, LocalTime hora) {
         this.investigador = investigador;
         this.peces = peces;
+        this.titulo = titulo;
+        this.resumen = resumen;
+        this.lugar = lugar;
+        this.fecha = fecha;
+        this.hora = hora;
+    }
+
+    public Investigacion(Usuario investigador, String titulo, String resumen, String lugar, LocalDate fecha, LocalTime hora, Long idInvestigacion) {
+        this.investigador = investigador;
+        this.titulo = titulo;
+        this.resumen = resumen;
+        this.lugar = lugar;
+        this.fecha = fecha;
+        this.hora = hora;
+        this.idInvestigacion = idInvestigacion;
+    }
+
+    public Investigacion(Usuario investigador, String titulo, String resumen, String lugar, LocalDate fecha, LocalTime hora) {
+        this.investigador = investigador;
         this.titulo = titulo;
         this.resumen = resumen;
         this.lugar = lugar;
