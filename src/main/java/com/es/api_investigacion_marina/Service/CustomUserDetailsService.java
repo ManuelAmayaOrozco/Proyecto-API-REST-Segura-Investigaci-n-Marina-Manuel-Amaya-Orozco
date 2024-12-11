@@ -14,7 +14,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
@@ -79,11 +81,27 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .findById(idL)
                 .orElseThrow(() -> new NotFoundException("Usuario con ID "+id+" no encontrado"));
 
-        return userToDTO(u);
+        return mapToDTO(u);
 
     }
 
-    private UsuarioDTO userToDTO(Usuario usuario) {
+    public List<UsuarioDTO> getAll() {
+
+        List<UsuarioDTO> listaDeDTOs = new ArrayList<>();
+
+        List<Usuario> listaUser = usuarioRepository.findAll();
+
+        for (Usuario u: listaUser) {
+
+            listaDeDTOs.add(mapToDTO(u));
+
+        }
+
+        return listaDeDTOs;
+
+    }
+
+    private UsuarioDTO mapToDTO(Usuario usuario) {
 
         String roles = Arrays.toString(usuario.getRoles().split(","));
 

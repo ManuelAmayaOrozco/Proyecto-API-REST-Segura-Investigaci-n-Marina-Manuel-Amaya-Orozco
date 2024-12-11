@@ -4,6 +4,7 @@ import com.es.api_investigacion_marina.DTO.UsuarioDTO;
 import com.es.api_investigacion_marina.DTO.UsuarioLoginDTO;
 import com.es.api_investigacion_marina.DTO.UsuarioRegisterDTO;
 import com.es.api_investigacion_marina.Exception.NotAuthorizedException;
+import com.es.api_investigacion_marina.Exception.NotFoundException;
 import com.es.api_investigacion_marina.Service.CustomUserDetailsService;
 import com.es.api_investigacion_marina.Service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -87,10 +89,28 @@ public class UsuarioController {
 
         if(authentication.getAuthorities()
                 .stream()
-                .anyMatch(authority -> authority.equals(new SimpleGrantedAuthority("ROLE_ADMIN"))) || authentication.getName().equals(usuarioDTO.getId().toString())) {
+                .anyMatch(authority -> authority.equals(new SimpleGrantedAuthority("ROLE_ADMIN"))) || authentication.getName().equals(usuarioDTO.getUsername())) {
             return new ResponseEntity<>(usuarioDTO, HttpStatus.OK);
         } else {
             throw new NotAuthorizedException("No tienes los permisos para acceder al recurso");
+        }
+
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<List<UsuarioDTO>> getAll() {
+
+        List<UsuarioDTO> u = customUserDetailsService.getAll();
+
+        if(u == null) {
+
+            throw new NotFoundException("No se encuentra ningún seguro para mostrar.");
+
+        } else {
+            ResponseEntity<List<UsuarioDTO>> respuesta = new ResponseEntity<List<UsuarioDTO>>(
+                    u, HttpStatus.OK
+            );
+            return respuesta;
         }
 
     }

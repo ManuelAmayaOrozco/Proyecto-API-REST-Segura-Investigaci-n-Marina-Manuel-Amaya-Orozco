@@ -39,6 +39,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth // Filtros para securizar diferentes endpoints de la aplicación
                                 .requestMatchers("/usuarios/login", "/usuarios/register").permitAll()
                                 .requestMatchers(HttpMethod.GET,"/usuarios/{idUser}").authenticated()
+                                .requestMatchers(HttpMethod.GET,"/usuarios/").hasRole("ADMIN")
 
                                 .anyRequest().authenticated() // Para el resto de peticiones, el usuario debe estar autenticado
                 )
