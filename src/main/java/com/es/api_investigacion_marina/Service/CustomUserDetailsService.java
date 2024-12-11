@@ -1,6 +1,9 @@
 package com.es.api_investigacion_marina.Service;
 
+import com.es.api_investigacion_marina.DTO.UsuarioDTO;
 import com.es.api_investigacion_marina.DTO.UsuarioRegisterDTO;
+import com.es.api_investigacion_marina.Exception.BadRequestException;
+import com.es.api_investigacion_marina.Exception.NotFoundException;
 import com.es.api_investigacion_marina.Model.Usuario;
 import com.es.api_investigacion_marina.Repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +13,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
@@ -58,6 +63,37 @@ public class CustomUserDetailsService implements UserDetailsService {
         usuarioRepository.save(newUsuario);
 
         return usuarioRegisterDTO;
+    }
+
+    public UsuarioDTO getByID(String id) {
+
+        // Parsear el id a Long
+        Long idL = 0L;
+        try {
+            idL = Long.parseLong(id);
+        } catch (NumberFormatException e) {
+            throw new BadRequestException("El campo ID no tiene un formato válido.");
+        }
+
+        Usuario u = usuarioRepository
+                .findById(idL)
+                .orElseThrow(() -> new NotFoundException("Usuario con ID "+id+" no encontrado"));
+
+        return userToDTO(u);
+
+    }
+
+    private UsuarioDTO userToDTO(Usuario usuario) {
+
+        String roles = Arrays.toString(usuario.getRoles().split(","));
+
+        return new UsuarioDTO(
+                usuario.getId(),
+                usuario.getUsername(),
+                usuario.getPassword(),
+                roles
+        );
+
     }
 
 }

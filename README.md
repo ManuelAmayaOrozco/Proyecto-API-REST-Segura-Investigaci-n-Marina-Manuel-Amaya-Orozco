@@ -178,6 +178,7 @@ Operaciones exitosas:
 Operaciones fallidas:
 
 - **400 Bad Request**: Errores de validación de la lógica de negocio.
+- **401 Not Authorized Exception**: Errores de autorización si no tiene los roles adecuados.
 - **404 Not Found**: Recursos inexistentes de la lógica de negocio.
 - **500 Internal Server Error**: Cualquier otro error que ocurra dentro del servidor.
 

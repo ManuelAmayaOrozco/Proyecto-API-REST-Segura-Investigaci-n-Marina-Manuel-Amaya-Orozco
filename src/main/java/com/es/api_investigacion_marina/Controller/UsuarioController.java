@@ -1,7 +1,9 @@
 package com.es.api_investigacion_marina.Controller;
 
+import com.es.api_investigacion_marina.DTO.UsuarioDTO;
 import com.es.api_investigacion_marina.DTO.UsuarioLoginDTO;
 import com.es.api_investigacion_marina.DTO.UsuarioRegisterDTO;
+import com.es.api_investigacion_marina.Exception.NotAuthorizedException;
 import com.es.api_investigacion_marina.Service.CustomUserDetailsService;
 import com.es.api_investigacion_marina.Service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.web.bind.annotation.*;
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -72,6 +73,25 @@ public class UsuarioController {
         customUserDetailsService.registerUser(usuarioRegisterDTO);
 
         return new ResponseEntity<UsuarioRegisterDTO>(usuarioRegisterDTO, HttpStatus.OK);
+
+    }
+
+    @GetMapping("/{idUser}")
+    public ResponseEntity<UsuarioDTO> getByID(
+            @PathVariable String idUser,
+            Authentication authentication,
+            Principal principal
+    ) {
+
+        UsuarioDTO usuarioDTO = customUserDetailsService.getByID(idUser);
+
+        if(authentication.getAuthorities()
+                .stream()
+                .anyMatch(authority -> authority.equals(new SimpleGrantedAuthority("ROLE_ADMIN"))) || authentication.getName().equals(usuarioDTO.getId().toString())) {
+            return new ResponseEntity<>(usuarioDTO, HttpStatus.OK);
+        } else {
+            throw new NotAuthorizedException("No tienes los permisos para acceder al recurso");
+        }
 
     }
 

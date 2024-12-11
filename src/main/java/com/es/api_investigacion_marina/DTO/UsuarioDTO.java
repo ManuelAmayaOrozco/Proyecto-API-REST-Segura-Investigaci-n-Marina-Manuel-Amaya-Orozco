@@ -1,22 +1,38 @@
 package com.es.api_investigacion_marina.DTO;
 
-public class UsuarioRegisterDTO {
+public class UsuarioDTO {
 
+    private Long id;
     private String username;
     private String password;
     private String roles;
 
     // Constructores
 
-    public UsuarioRegisterDTO(String username, String password, String roles) {
+    public UsuarioDTO(Long id, String username, String password, String roles) {
+        this.id = id;
         this.username = username;
         this.password = password;
         this.roles = roles;
     }
 
-    public UsuarioRegisterDTO(){}
+    public UsuarioDTO(String username, String password, String roles) {
+        this.username = username;
+        this.password = password;
+        this.roles = roles;
+    }
+
+    public UsuarioDTO() {}
 
     // Getters y Setters
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getUsername() {
         return username;
@@ -41,5 +57,4 @@ public class UsuarioRegisterDTO {
     public void setRoles(String roles) {
         this.roles = roles;
     }
-
 }

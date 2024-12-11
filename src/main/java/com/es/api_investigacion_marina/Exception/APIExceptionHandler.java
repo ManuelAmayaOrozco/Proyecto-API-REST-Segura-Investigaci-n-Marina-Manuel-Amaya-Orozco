@@ -41,4 +41,13 @@ public class APIExceptionHandler {
 
     }
 
+    @ExceptionHandler(NotAuthorizedException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ResponseBody
+    public ErrorMessageForClient handleNotAuthorizedException(HttpServletRequest request, Exception e) {
+
+        return new ErrorMessageForClient(e.getMessage(), request.getRequestURI());
+
+    }
+
 }
