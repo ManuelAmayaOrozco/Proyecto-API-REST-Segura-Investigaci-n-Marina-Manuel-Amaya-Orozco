@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
@@ -181,6 +182,22 @@ public class CustomUserDetailsService implements UserDetailsService {
             for (Pez p: peces) {
 
                 if (p.getInvestigador().getId() == idL) {
+
+                    //Eliminamos todas las investigaciones relacionadas con dicho pez
+
+                    List<Investigacion> investigacionesP = investigacionRepository.findAll();
+
+                    for (Investigacion i: investigacionesP) {
+
+                        List<Pez> pecesI = i.getPeces();
+
+                        pecesI.removeIf(pez -> Objects.equals(pez.getIdPez(), p.getIdPez()));
+
+                        i.setPeces(pecesI);
+
+                        investigacionRepository.save(i);
+
+                    }
 
                     pezRepository.delete(p);
 
