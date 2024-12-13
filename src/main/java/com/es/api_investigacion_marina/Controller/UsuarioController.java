@@ -145,4 +145,31 @@ public class UsuarioController {
 
     }
 
+    @DeleteMapping("/{idUser}")
+    public ResponseEntity<UsuarioDTO> delete(
+            @PathVariable String idUser
+    ) {
+
+        // Compruebo que el id no es null
+        if (idUser == null) {
+
+            throw new BadRequestException("El campo ID no tiene un formato válido.");
+
+        }
+
+        UsuarioDTO u = customUserDetailsService.delete(idUser);
+
+        if(u == null) {
+
+            throw new InternalServerErrorException("Un error inesperado ha ocurrido al intentar eliminar el usuario.");
+
+        } else {
+            ResponseEntity<UsuarioDTO> respuesta = new ResponseEntity<UsuarioDTO>(
+                    u, HttpStatus.NO_CONTENT
+            );
+            return respuesta;
+        }
+
+    }
+
 }

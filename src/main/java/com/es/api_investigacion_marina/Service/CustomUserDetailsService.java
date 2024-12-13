@@ -4,7 +4,11 @@ import com.es.api_investigacion_marina.DTO.UsuarioDTO;
 import com.es.api_investigacion_marina.DTO.UsuarioRegisterDTO;
 import com.es.api_investigacion_marina.Exception.BadRequestException;
 import com.es.api_investigacion_marina.Exception.NotFoundException;
+import com.es.api_investigacion_marina.Model.Investigacion;
+import com.es.api_investigacion_marina.Model.Pez;
 import com.es.api_investigacion_marina.Model.Usuario;
+import com.es.api_investigacion_marina.Repository.InvestigacionRepository;
+import com.es.api_investigacion_marina.Repository.PezRepository;
 import com.es.api_investigacion_marina.Repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -26,6 +30,12 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private InvestigacionRepository investigacionRepository;
+
+    @Autowired
+    private PezRepository pezRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -130,6 +140,60 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         }
 
+    }
+
+    public UsuarioDTO delete(String idUser) {
+
+        // Parsear el id a Long
+        Long idL = 0L;
+        try {
+            idL = Long.parseLong(idUser);
+        } catch (NumberFormatException e) {
+            throw new BadRequestException("El campo ID no tiene un formato válido.");
+        }
+
+        Usuario u = usuarioRepository
+                .findById(idL)
+                .orElseThrow(() -> new NotFoundException("Usuario con ID "+idUser+" no encontrado"));
+
+        if(u == null) {
+            throw new NotFoundException("No se encuentra ningún usuario con el ID especificado.");
+        } else {
+
+            //Eliminamos todas las investigaciones relacionadas
+
+            List<Investigacion> investigaciones = investigacionRepository.findAll();
+
+            for (Investigacion i: investigaciones) {
+
+                if (i.getInvestigador().getId() == idL) {
+
+                    investigacionRepository.delete(i);
+
+                }
+
+            }
+
+            //Eliminamos todos los peces relacionados
+
+            List<Pez> peces = pezRepository.findAll();
+
+            for (Pez p: peces) {
+
+                if (p.getInvestigador().getId() == idL) {
+
+                    pezRepository.delete(p);
+
+                }
+
+            }
+
+            UsuarioDTO usuarioDTO = mapToDTO(u);
+
+            usuarioRepository.delete(u);
+
+            return usuarioDTO;
+        }
     }
 
     private UsuarioDTO mapToDTO(Usuario usuario) {
