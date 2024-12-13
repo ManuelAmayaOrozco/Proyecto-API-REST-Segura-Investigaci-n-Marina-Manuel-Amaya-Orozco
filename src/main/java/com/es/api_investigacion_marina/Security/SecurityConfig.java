@@ -40,6 +40,7 @@ public class SecurityConfig {
                                 .requestMatchers("/usuarios/login", "/usuarios/register").permitAll()
                                 .requestMatchers(HttpMethod.GET,"/usuarios/{idUser}").authenticated()
                                 .requestMatchers(HttpMethod.GET,"/usuarios/").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.PUT,"/usuarios/{idUser}").hasRole("ADMIN")
 
                                 .anyRequest().authenticated() // Para el resto de peticiones, el usuario debe estar autenticado
                 )

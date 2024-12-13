@@ -67,19 +67,19 @@ public class CustomUserDetailsService implements UserDetailsService {
         return usuarioRegisterDTO;
     }
 
-    public UsuarioDTO getByID(String id) {
+    public UsuarioDTO getByID(String idUser) {
 
         // Parsear el id a Long
         Long idL = 0L;
         try {
-            idL = Long.parseLong(id);
+            idL = Long.parseLong(idUser);
         } catch (NumberFormatException e) {
             throw new BadRequestException("El campo ID no tiene un formato válido.");
         }
 
         Usuario u = usuarioRepository
                 .findById(idL)
-                .orElseThrow(() -> new NotFoundException("Usuario con ID "+id+" no encontrado"));
+                .orElseThrow(() -> new NotFoundException("Usuario con ID "+idUser+" no encontrado"));
 
         return mapToDTO(u);
 
@@ -101,12 +101,66 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     }
 
+    public UsuarioRegisterDTO update(String idUser, UsuarioRegisterDTO usuarioRegisterDTO) {
+
+        // Parsear el id a Long
+        Long idL = 0L;
+        try {
+            idL = Long.parseLong(idUser);
+        } catch (NumberFormatException e) {
+            throw new BadRequestException("El campo ID no tiene un formato válido.");
+        }
+
+        // Compruebo que el usuario existe en la BDD
+        Usuario u = usuarioRepository.findById(idL).orElse(null);
+
+        if (u == null) {
+
+            return null;
+
+        } else {
+
+            Usuario newU = mapToUsuario(usuarioRegisterDTO);
+
+            newU.setId(u.getId());
+
+            usuarioRepository.save(newU);
+
+            return mapToRegisterDTO(newU);
+
+        }
+
+    }
+
     private UsuarioDTO mapToDTO(Usuario usuario) {
 
         String roles = Arrays.toString(usuario.getRoles().split(","));
 
         return new UsuarioDTO(
                 usuario.getId(),
+                usuario.getUsername(),
+                usuario.getPassword(),
+                roles
+        );
+
+    }
+
+    private Usuario mapToUsuario(UsuarioRegisterDTO usuarioRegisterDTO) {
+
+        return new Usuario(
+                Long.parseLong("0"),
+                usuarioRegisterDTO.getUsername(),
+                passwordEncoder.encode(usuarioRegisterDTO.getPassword()),
+                usuarioRegisterDTO.getRoles()
+        );
+
+    }
+
+    private UsuarioRegisterDTO mapToRegisterDTO(Usuario usuario) {
+
+        String roles = Arrays.toString(usuario.getRoles().split(","));
+
+        return new UsuarioRegisterDTO(
                 usuario.getUsername(),
                 usuario.getPassword(),
                 roles

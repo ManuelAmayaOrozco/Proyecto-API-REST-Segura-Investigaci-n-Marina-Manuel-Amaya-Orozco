@@ -3,6 +3,8 @@ package com.es.api_investigacion_marina.Controller;
 import com.es.api_investigacion_marina.DTO.UsuarioDTO;
 import com.es.api_investigacion_marina.DTO.UsuarioLoginDTO;
 import com.es.api_investigacion_marina.DTO.UsuarioRegisterDTO;
+import com.es.api_investigacion_marina.Exception.BadRequestException;
+import com.es.api_investigacion_marina.Exception.InternalServerErrorException;
 import com.es.api_investigacion_marina.Exception.NotAuthorizedException;
 import com.es.api_investigacion_marina.Exception.NotFoundException;
 import com.es.api_investigacion_marina.Service.CustomUserDetailsService;
@@ -108,6 +110,34 @@ public class UsuarioController {
 
         } else {
             ResponseEntity<List<UsuarioDTO>> respuesta = new ResponseEntity<List<UsuarioDTO>>(
+                    u, HttpStatus.OK
+            );
+            return respuesta;
+        }
+
+    }
+
+    @PutMapping("/{idUser}")
+    public ResponseEntity<UsuarioRegisterDTO> update(
+            @RequestBody UsuarioRegisterDTO usuarioRegisterDTO,
+            @PathVariable String idUser
+    ) {
+
+        // Compruebo que el id no es null
+        if (idUser == null) {
+
+            throw new BadRequestException("El campo ID no tiene un formato válido.");
+
+        }
+
+        UsuarioRegisterDTO u = customUserDetailsService.update(idUser, usuarioRegisterDTO);
+
+        if(u == null) {
+
+            throw new InternalServerErrorException("Un error inesperado ha ocurrido al intentar actualizar el usuario.");
+
+        } else {
+            ResponseEntity<UsuarioRegisterDTO> respuesta = new ResponseEntity<UsuarioRegisterDTO>(
                     u, HttpStatus.OK
             );
             return respuesta;
