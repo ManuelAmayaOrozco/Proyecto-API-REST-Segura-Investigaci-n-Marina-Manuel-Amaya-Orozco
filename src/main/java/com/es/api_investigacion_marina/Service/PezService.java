@@ -2,6 +2,7 @@ package com.es.api_investigacion_marina.Service;
 
 import com.es.api_investigacion_marina.DTO.InvestigacionDTO;
 import com.es.api_investigacion_marina.DTO.PezDTO;
+import com.es.api_investigacion_marina.DTO.UsuarioDTO;
 import com.es.api_investigacion_marina.DTO.UsuarioRegisterDTO;
 import com.es.api_investigacion_marina.Exception.BadRequestException;
 import com.es.api_investigacion_marina.Exception.InternalServerErrorException;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class PezService {
@@ -365,6 +367,51 @@ public class PezService {
             return mapToDTO(newP);
 
         }
+
+    }
+
+    public PezDTO delete(String idPez) {
+
+        // Parsear el id a Long
+        Long idL = 0L;
+        try {
+            idL = Long.parseLong(idPez);
+        } catch (NumberFormatException e) {
+            throw new BadRequestException("El campo ID no tiene un formato válido.");
+        }
+
+        Pez p = pezRepository
+                .findById(idL)
+                .orElseThrow(() -> new NotFoundException("Pez con ID "+idPez+" no encontrado"));
+
+        if(p == null) {
+            throw new NotFoundException("No se encuentra ningún pez con el ID especificado.");
+        } else {
+
+            //Actualizamos todas las investigaciones relacionadas con dicho pez
+
+            List<Investigacion> investigacionesP = investigacionRepository.findAll();
+
+            for (Investigacion i: investigacionesP) {
+
+                List<Pez> pecesI = i.getPeces();
+
+                pecesI.removeIf(pezz -> Objects.equals(pezz.getIdPez(), p.getIdPez()));
+
+                i.setPeces(pecesI);
+
+                investigacionRepository.save(i);
+
+            }
+
+            PezDTO pezDTO = mapToDTO(p);
+
+            pezRepository.delete(p);
+
+            return pezDTO;
+
+        }
+
 
     }
 

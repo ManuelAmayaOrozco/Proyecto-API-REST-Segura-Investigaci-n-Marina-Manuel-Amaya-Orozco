@@ -183,7 +183,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
                 if (p.getInvestigador().getId() == idL) {
 
-                    //Eliminamos todas las investigaciones relacionadas con dicho pez
+                    //Actualizamos todas las investigaciones relacionadas con dicho pez
 
                     List<Investigacion> investigacionesP = investigacionRepository.findAll();
 

@@ -1,6 +1,7 @@
 package com.es.api_investigacion_marina.Controller;
 
 import com.es.api_investigacion_marina.DTO.PezDTO;
+import com.es.api_investigacion_marina.DTO.UsuarioDTO;
 import com.es.api_investigacion_marina.DTO.UsuarioRegisterDTO;
 import com.es.api_investigacion_marina.Exception.BadRequestException;
 import com.es.api_investigacion_marina.Exception.InternalServerErrorException;
@@ -108,6 +109,33 @@ public class PezController {
         } else {
             ResponseEntity<PezDTO> respuesta = new ResponseEntity<PezDTO>(
                     p, HttpStatus.OK
+            );
+            return respuesta;
+        }
+
+    }
+
+    @DeleteMapping("/{idPez}")
+    public ResponseEntity<PezDTO> delete(
+            @PathVariable String idPez
+    ) {
+
+        // Compruebo que el id no es null
+        if (idPez == null) {
+
+            throw new BadRequestException("El campo ID no tiene un formato válido.");
+
+        }
+
+        PezDTO p = pezService.delete(idPez);
+
+        if(p == null) {
+
+            throw new InternalServerErrorException("Un error inesperado ha ocurrido al intentar eliminar el pez.");
+
+        } else {
+            ResponseEntity<PezDTO> respuesta = new ResponseEntity<PezDTO>(
+                    p, HttpStatus.NO_CONTENT
             );
             return respuesta;
         }
