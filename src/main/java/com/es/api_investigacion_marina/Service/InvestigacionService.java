@@ -313,6 +313,35 @@ public class InvestigacionService {
 
     }
 
+    public InvestigacionDTO delete(String idInvestigacion) {
+
+        // Parsear el id a Long
+        Long idL = 0L;
+        try {
+            idL = Long.parseLong(idInvestigacion);
+        } catch (NumberFormatException e) {
+            throw new BadRequestException("El campo ID no tiene un formato válido.");
+        }
+
+        Investigacion i = investigacionRepository
+                            .findById(idL)
+                            .orElseThrow(() -> new NotFoundException("Investigación con ID "+idInvestigacion+" no encontrada"));
+
+        if(i == null) {
+            throw new NotFoundException("No se encuentra ninguna investigación con el ID especificado.");
+        } else {
+
+            InvestigacionDTO investigacionDTO = mapToDTO(i);
+
+            investigacionRepository.delete(i);
+
+            return investigacionDTO;
+
+        }
+
+
+    }
+
     private InvestigacionDTO mapToDTO(Investigacion investigacion) {
 
         InvestigacionDTO investigacionDTO = new InvestigacionDTO();

@@ -1,8 +1,6 @@
 package com.es.api_investigacion_marina.Exception;
 
 import jakarta.servlet.http.HttpServletRequest;
-import org.apache.coyote.BadRequestException;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -23,7 +21,7 @@ public class APIExceptionHandler {
 
     //e.getMessage() -> BAD REQUEST (400). mensaje personalizado
 
-    @ExceptionHandler(ChangeSetPersister.NotFoundException.class)
+    @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
     public ErrorMessageForClient handleNotFound(HttpServletRequest request, Exception e) {

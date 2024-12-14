@@ -6,6 +6,7 @@ import com.es.api_investigacion_marina.Exception.BadRequestException;
 import com.es.api_investigacion_marina.Exception.InternalServerErrorException;
 import com.es.api_investigacion_marina.Exception.NotAuthorizedException;
 import com.es.api_investigacion_marina.Exception.NotFoundException;
+import com.es.api_investigacion_marina.Model.Investigacion;
 import com.es.api_investigacion_marina.Model.Usuario;
 import com.es.api_investigacion_marina.Repository.UsuarioRepository;
 import com.es.api_investigacion_marina.Service.InvestigacionService;
@@ -118,7 +119,7 @@ public class InvestigacionController {
 
         }
 
-        InvestigacionDTO i = investigacionService.update(idInvestigacion, investigacionDTO);
+        InvestigacionDTO i = investigacionService.getById(idInvestigacion);
 
         if(i == null) {
 
@@ -131,7 +132,49 @@ public class InvestigacionController {
             if(authentication.getAuthorities()
                     .stream()
                     .anyMatch(authority -> authority.equals(new SimpleGrantedAuthority("ROLE_ADMIN"))) || authentication.getName().equals(u.getUsername())) {
-                return new ResponseEntity<>(i, HttpStatus.OK);
+
+                InvestigacionDTO newI = investigacionService.update(idInvestigacion, investigacionDTO);
+
+                return new ResponseEntity<>(newI, HttpStatus.OK);
+            } else {
+                throw new NotAuthorizedException("No tienes los permisos para acceder al recurso");
+            }
+
+        }
+
+    }
+
+    @DeleteMapping("/{idInvestigacion}")
+    public ResponseEntity<InvestigacionDTO> delete(
+            @PathVariable String idInvestigacion,
+            Authentication authentication,
+            Principal principal
+    ) {
+
+        // Compruebo que el id no es null
+        if (idInvestigacion == null) {
+
+            throw new BadRequestException("El campo ID no tiene un formato válido.");
+
+        }
+
+        InvestigacionDTO i = investigacionService.getById(idInvestigacion);
+
+        if(i == null) {
+
+            throw new InternalServerErrorException("Un error inesperado ha ocurrido al intentar eliminar la investigación.");
+
+        } else {
+
+            Usuario u = usuarioRepository.getReferenceById(i.getIdInvestigador());
+
+            if(authentication.getAuthorities()
+                    .stream()
+                    .anyMatch(authority -> authority.equals(new SimpleGrantedAuthority("ROLE_ADMIN"))) || authentication.getName().equals(u.getUsername())) {
+
+                investigacionService.delete(idInvestigacion);
+
+                return new ResponseEntity<>(i, HttpStatus.NO_CONTENT);
             } else {
                 throw new NotAuthorizedException("No tienes los permisos para acceder al recurso");
             }
