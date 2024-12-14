@@ -50,6 +50,7 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.GET,"/investigaciones/{idInvestigacion}").authenticated()
                                 .requestMatchers(HttpMethod.GET,"/investigaciones/").hasRole("ADMIN")
                                 .requestMatchers(HttpMethod.POST,"/investigaciones/").authenticated()
+                                .requestMatchers(HttpMethod.PUT,"/investigaciones/{idInvestigacion}").authenticated()
 
                                 .anyRequest().authenticated() // Para el resto de peticiones, el usuario debe estar autenticado
                 )

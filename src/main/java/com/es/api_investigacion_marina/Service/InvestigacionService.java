@@ -183,6 +183,136 @@ public class InvestigacionService {
 
     }
 
+    public InvestigacionDTO update(String idInvestigacion, InvestigacionDTO investigacionDTO) {
+
+        // Parsear el id a Long
+        Long idL = 0L;
+        try {
+            idL = Long.parseLong(idInvestigacion);
+        } catch (NumberFormatException e) {
+            throw new BadRequestException("El campo ID no tiene un formato válido.");
+        }
+
+        //Comprobación idInvestigador
+        if (investigacionDTO.getIdInvestigador() == null) {
+
+            throw new BadRequestException("El ID del investigador no puede estar vacío.");
+
+        } else {
+
+            //Comprobamos si el usuario existe en la BDD
+            boolean existe = false;
+
+            List<Usuario> usuarios = usuarioRepository.findAll();
+
+            for (Usuario u: usuarios) {
+
+                if (u.getId() == investigacionDTO.getIdInvestigador()) {
+
+                    existe = true;
+
+                    break;
+
+                }
+
+            }
+
+            if (!existe) {
+
+                throw new NotFoundException("El ID introducido no coincide con ningún usuario de la base de datos.");
+
+            }
+
+        }
+
+        //Comprobación peces (todos los peces deben existir en la BDD)
+        if (!investigacionDTO.getPeces().isEmpty()) {
+
+            List<Long> pecesDTO = investigacionDTO.getPeces();
+            List<Pez> peces = pezRepository.findAll();
+
+            for (Long pDTO : pecesDTO) {
+
+                boolean existe = false;
+
+                for (Pez p : peces) {
+
+                    if (p.getIdPez() == pDTO) {
+
+                        existe = true;
+
+                        break;
+
+                    }
+
+                }
+
+                if (!existe) {
+
+                    throw new NotFoundException("No se ha encontrado uno de los peces dentro de la base de datos.");
+
+                }
+
+            }
+
+        }
+
+        //Comprobación titulo
+        if (investigacionDTO.getTitulo().isEmpty()) {
+
+            throw new BadRequestException("El título de la investigación no puede estar vacío.");
+
+        }
+
+        //Comprobación resumen
+        if (investigacionDTO.getResumen().isEmpty()) {
+
+            throw new BadRequestException("El resumen de la investigación no puede estar vacío.");
+
+        }
+
+        //Comprobación lugar
+        if (investigacionDTO.getLugar().isEmpty()) {
+
+            throw new BadRequestException("El lugar de la investigación no puede estar vacío.");
+
+        }
+
+        //Comprobación fecha
+        if (investigacionDTO.getFecha() == null) {
+
+            throw new BadRequestException("La fecha de la investigación no puede ser nula.");
+
+        }
+
+        //Comprobación hora
+        if (investigacionDTO.getHora() == null) {
+
+            throw new BadRequestException("La hora de la investigación no puede ser nula.");
+
+        }
+
+        // Compruebo que la investigación existe en la BDD
+        Investigacion i = investigacionRepository.findById(idL).orElse(null);
+
+        if (i == null) {
+
+            return null;
+
+        } else {
+
+            Investigacion newI = mapToInvestigacion(investigacionDTO);
+
+            newI.setIdInvestigacion(i.getIdInvestigacion());
+
+            investigacionRepository.save(newI);
+
+            return mapToDTO(newI);
+
+        }
+
+    }
+
     private InvestigacionDTO mapToDTO(Investigacion investigacion) {
 
         InvestigacionDTO investigacionDTO = new InvestigacionDTO();
