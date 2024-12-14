@@ -57,6 +57,22 @@ public class InvestigacionService {
 
     }
 
+    public List<InvestigacionDTO> getAll() {
+
+        List<InvestigacionDTO> listaDeDTOs = new ArrayList<>();
+
+        List<Investigacion> listaInvestigacion = investigacionRepository.findAll();
+
+        for (Investigacion i: listaInvestigacion) {
+
+            listaDeDTOs.add(mapToDTO(i));
+
+        }
+
+        return listaDeDTOs;
+
+    }
+
     private InvestigacionDTO mapToDTO(Investigacion investigacion) {
 
         InvestigacionDTO investigacionDTO = new InvestigacionDTO();
