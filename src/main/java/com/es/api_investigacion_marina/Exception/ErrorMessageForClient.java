@@ -1,5 +1,8 @@
 package com.es.api_investigacion_marina.Exception;
 
+/*
+Estructura genérica usada para los mensajes de error que se muestran al cliente.
+ */
 public class ErrorMessageForClient {
 
     private String mensaje;

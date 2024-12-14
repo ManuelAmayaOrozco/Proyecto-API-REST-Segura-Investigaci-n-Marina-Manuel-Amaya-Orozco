@@ -1,5 +1,8 @@
 package com.es.api_investigacion_marina.DTO;
 
+/*
+Clase DTO de Usuario, usado de manera general que muestra toda su información.
+ */
 public class UsuarioDTO {
 
     private Long id;

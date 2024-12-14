@@ -20,6 +20,10 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.List;
 
+/*
+Clase Controller para los Usuarios, llama a usuarioService para realizar las
+diferentes acciones de los endpoints establecidos y devuelve una respuesta al usuario.
+ */
 @RestController
 @RequestMapping("/usuarios")
 public class UsuarioController {
@@ -33,22 +37,22 @@ public class UsuarioController {
     @Autowired
     private TokenService tokenService;
 
+    /*
+    Función encargada de logear al usuario, devolviendo un token de sesión si se introducen
+    los datos correctamente.
+     */
     @PostMapping("/login")
     public String login(
             @RequestBody UsuarioLoginDTO usuarioLoginDTO
     ) {
 
-        System.out.println(
-                usuarioLoginDTO.getUsername() + " " + usuarioLoginDTO.getPassword()
-        );
-
         Authentication authentication = null;
         try {
             authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(usuarioLoginDTO.getUsername(), usuarioLoginDTO.getPassword())// modo de autenticación
+                    new UsernamePasswordAuthenticationToken(usuarioLoginDTO.getUsername(), usuarioLoginDTO.getPassword()) // modo de autenticación
             );
         } catch (Exception e) {
-            System.out.println("Excepcion en authentication");
+            System.out.println("Excepción en authentication");
             e.printStackTrace();
         }
 
@@ -57,7 +61,7 @@ public class UsuarioController {
         try {
             token = tokenService.generateToken(authentication);
         } catch (Exception e) {
-            System.out.println("Excepcion en generar token");
+            System.out.println("Excepción en generar token");
             e.printStackTrace();
         }
 
@@ -66,13 +70,13 @@ public class UsuarioController {
 
     }
 
+    /*
+    Función encargada de registrar un usuario nuevo en la base de datos, devolviendo ese mismo
+    usuario creado.
+     */
     @PostMapping("/register")
     public ResponseEntity<UsuarioRegisterDTO> register(
             @RequestBody UsuarioRegisterDTO usuarioRegisterDTO) {
-
-        System.out.println(
-                usuarioRegisterDTO.getPassword()
-        );
 
         customUserDetailsService.registerUser(usuarioRegisterDTO);
 
@@ -80,6 +84,9 @@ public class UsuarioController {
 
     }
 
+    /*
+    Función encargada de devolver la información de un usuario existente, buscando por su ID.
+     */
     @GetMapping("/{idUser}")
     public ResponseEntity<UsuarioDTO> getByID(
             @PathVariable String idUser,
@@ -114,6 +121,9 @@ public class UsuarioController {
 
     }
 
+    /*
+    Función encargada de devolver una lista completa de todos los usuarios de la base de datos.
+     */
     @GetMapping("/")
     public ResponseEntity<List<UsuarioDTO>> getAll() {
 
@@ -132,6 +142,10 @@ public class UsuarioController {
 
     }
 
+    /*
+    Función encargada de actualizar un usuario de la base de datos, devolviendo el usuario
+    actualizado junto con la respuesta.
+     */
     @PutMapping("/{idUser}")
     public ResponseEntity<UsuarioRegisterDTO> update(
             @RequestBody UsuarioRegisterDTO usuarioRegisterDTO,
@@ -160,6 +174,9 @@ public class UsuarioController {
 
     }
 
+    /*
+    Función encargada de eliminar un usuario de la base de datos, buscándolo por su ID.
+     */
     @DeleteMapping("/{idUser}")
     public ResponseEntity<UsuarioDTO> delete(
             @PathVariable String idUser

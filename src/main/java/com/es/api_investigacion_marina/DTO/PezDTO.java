@@ -2,6 +2,9 @@ package com.es.api_investigacion_marina.DTO;
 
 import java.util.List;
 
+/*
+Clase DTO de Pez.
+ */
 public class PezDTO {
 
     private Long idPez;

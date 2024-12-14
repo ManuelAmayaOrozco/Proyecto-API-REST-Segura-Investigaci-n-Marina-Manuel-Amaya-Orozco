@@ -4,6 +4,10 @@ import jakarta.persistence.*;
 
 import java.util.List;
 
+/*
+Clase que representa un pez descubierto por un investigador y cuya información ha sido registrada
+en la base de datos para ser mencionada en diferentes investigaciones.
+ */
 @Entity
 @Table(name = "peces")
 public class Pez {

@@ -7,6 +7,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+/*
+Controlador de excepciones el cual devuelve un tipo de excepción diferente dependiendo
+de la situación.
+ */
 @ControllerAdvice
 public class APIExceptionHandler {
 
@@ -18,8 +22,6 @@ public class APIExceptionHandler {
         return new ErrorMessageForClient(e.getMessage(), request.getRequestURI());
 
     }
-
-    //e.getMessage() -> BAD REQUEST (400). mensaje personalizado
 
     @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)

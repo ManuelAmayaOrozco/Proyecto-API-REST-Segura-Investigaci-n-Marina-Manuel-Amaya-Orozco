@@ -23,6 +23,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+/*
+Clase Service para los Usuarios, donde se llevan a cabo las modificaciones y otros
+procesos que serán devueltos al controlador.
+ */
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
@@ -38,6 +42,9 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
     private PezRepository pezRepository;
 
+    /*
+    Función encargada de buscar usuarios por su nombre, no implementada.
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
@@ -58,6 +65,10 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     }
 
+    /*
+    Función encargada de registrar al usuario en la base de datos, devuelve el usuario
+    registrado.
+     */
     public UsuarioRegisterDTO registerUser(UsuarioRegisterDTO usuarioRegisterDTO) {
 
         // Comprobamos que el usuario no existe en la base de datos
@@ -78,6 +89,9 @@ public class CustomUserDetailsService implements UserDetailsService {
         return usuarioRegisterDTO;
     }
 
+    /*
+    Función encargada de buscar un usuario por su ID y devolverlo.
+     */
     public UsuarioDTO getByID(String idUser) {
 
         // Parsear el id a Long
@@ -96,6 +110,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     }
 
+    /*
+    Función encargada de obtener una lista de todos los usuarios y devolverla.
+     */
     public List<UsuarioDTO> getAll() {
 
         List<UsuarioDTO> listaDeDTOs = new ArrayList<>();
@@ -112,6 +129,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     }
 
+    /*
+    Función encargada de actualizar un usuario y devolver el usuario actualizado.
+     */
     public UsuarioRegisterDTO update(String idUser, UsuarioRegisterDTO usuarioRegisterDTO) {
 
         // Parsear el id a Long
@@ -143,6 +163,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     }
 
+    /*
+    Función encargada de eliminar un usuario y devolver el usuario eliminado.
+     */
     public UsuarioDTO delete(String idUser) {
 
         // Parsear el id a Long
@@ -213,6 +236,9 @@ public class CustomUserDetailsService implements UserDetailsService {
         }
     }
 
+    /*
+    Función para mapear un usuario a DTO.
+     */
     private UsuarioDTO mapToDTO(Usuario usuario) {
 
         String roles = Arrays.toString(usuario.getRoles().split(","));
@@ -226,6 +252,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     }
 
+    /*
+    Función para mapear un DTO de usuario a usuario.
+     */
     private Usuario mapToUsuario(UsuarioRegisterDTO usuarioRegisterDTO) {
 
         return new Usuario(
@@ -237,6 +266,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     }
 
+    /*
+    Función para mapear un usuario a DTO durante el registro.
+     */
     private UsuarioRegisterDTO mapToRegisterDTO(Usuario usuario) {
 
         String roles = Arrays.toString(usuario.getRoles().split(","));

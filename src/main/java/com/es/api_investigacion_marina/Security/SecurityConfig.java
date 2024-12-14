@@ -24,6 +24,9 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+/*
+Clase encargada de llevar a cabo la seguridad de la base de datos.
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {

@@ -6,6 +6,10 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
+/*
+Clase que representa una investigación llevada a cabo por un usuario, la cual puede contener
+información a cerca de diferentes tipos de peces que haya encontrado durante dicha investigación.
+ */
 @Entity
 @Table(name = "investigaciones")
 public class Investigacion {

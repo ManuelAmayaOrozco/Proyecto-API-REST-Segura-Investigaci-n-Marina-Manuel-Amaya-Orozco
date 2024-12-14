@@ -1,7 +1,6 @@
 package com.es.api_investigacion_marina.Service;
 
 import com.es.api_investigacion_marina.DTO.InvestigacionDTO;
-import com.es.api_investigacion_marina.DTO.PezDTO;
 import com.es.api_investigacion_marina.Exception.BadRequestException;
 import com.es.api_investigacion_marina.Exception.InternalServerErrorException;
 import com.es.api_investigacion_marina.Exception.NotFoundException;
@@ -17,6 +16,10 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+Clase Service para las Investigaciones, donde se llevan a cabo las modificaciones y otros
+procesos que serán devueltos al controlador.
+ */
 @Service
 public class InvestigacionService {
 
@@ -29,6 +32,10 @@ public class InvestigacionService {
     @Autowired
     private PezRepository pezRepository;
 
+    /*
+    Función encargada de registrar una investigación en la base de datos, devuelve la investigación
+    registrada.
+     */
     public InvestigacionDTO create(InvestigacionDTO investigacionDTO) {
 
         //Comprobación idInvestigador
@@ -138,6 +145,9 @@ public class InvestigacionService {
 
     }
 
+    /*
+    Función encargada de buscar una investigación por su ID y devolverla.
+     */
     public InvestigacionDTO getById(String idInvestigacion) {
 
         // Parsear el id a Long
@@ -167,6 +177,9 @@ public class InvestigacionService {
 
     }
 
+    /*
+    Función encargada de obtener una lista de todas las investigaciones y devolverla.
+     */
     public List<InvestigacionDTO> getAll() {
 
         List<InvestigacionDTO> listaDeDTOs = new ArrayList<>();
@@ -183,6 +196,9 @@ public class InvestigacionService {
 
     }
 
+    /*
+    Función encargada de actualizar una investigación y devolver la investigación actualizada.
+     */
     public InvestigacionDTO update(String idInvestigacion, InvestigacionDTO investigacionDTO) {
 
         // Parsear el id a Long
@@ -313,6 +329,9 @@ public class InvestigacionService {
 
     }
 
+    /*
+    Función encargada de eliminar una investigación y devolver la investigación eliminada.
+     */
     public InvestigacionDTO delete(String idInvestigacion) {
 
         // Parsear el id a Long
@@ -342,6 +361,9 @@ public class InvestigacionService {
 
     }
 
+    /*
+    Función para mapear una investigación a DTO.
+     */
     private InvestigacionDTO mapToDTO(Investigacion investigacion) {
 
         InvestigacionDTO investigacionDTO = new InvestigacionDTO();
@@ -369,6 +391,9 @@ public class InvestigacionService {
 
     }
 
+    /*
+    Función para mapear un DTO de investigación a investigación.
+     */
     private Investigacion mapToInvestigacion(InvestigacionDTO investigacionDTO) {
 
         Investigacion investigacion = new Investigacion();

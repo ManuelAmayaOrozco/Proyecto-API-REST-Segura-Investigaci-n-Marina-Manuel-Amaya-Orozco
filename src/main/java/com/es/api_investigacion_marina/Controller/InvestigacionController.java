@@ -1,12 +1,10 @@
 package com.es.api_investigacion_marina.Controller;
 
 import com.es.api_investigacion_marina.DTO.InvestigacionDTO;
-import com.es.api_investigacion_marina.DTO.PezDTO;
 import com.es.api_investigacion_marina.Exception.BadRequestException;
 import com.es.api_investigacion_marina.Exception.InternalServerErrorException;
 import com.es.api_investigacion_marina.Exception.NotAuthorizedException;
 import com.es.api_investigacion_marina.Exception.NotFoundException;
-import com.es.api_investigacion_marina.Model.Investigacion;
 import com.es.api_investigacion_marina.Model.Usuario;
 import com.es.api_investigacion_marina.Repository.UsuarioRepository;
 import com.es.api_investigacion_marina.Service.InvestigacionService;
@@ -20,6 +18,10 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.List;
 
+/*
+Clase Controller para las Investigaciones, llama a investigacionService para realizar las
+diferentes acciones de los endpoints establecidos y devuelve una respuesta al usuario.
+ */
 @RestController
 @RequestMapping("/investigaciones")
 public class InvestigacionController {
@@ -30,6 +32,10 @@ public class InvestigacionController {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    /*
+    Función encargada de crear las investigaciones dentro de la base de datos, llamando
+    a investigacionService para que realice la creación en si.
+     */
     @PostMapping("/")
     public ResponseEntity<InvestigacionDTO> create(
             @RequestBody InvestigacionDTO investigacionDTO
@@ -50,6 +56,11 @@ public class InvestigacionController {
 
     }
 
+    /*
+    Función encargada de obtener una de las investigaciones buscando por su ID, llamando a
+    investigacionService para que obtenga la investigación y sea devuelta junto con la
+    respuesta.
+     */
     @GetMapping("/{idInvestigacion}")
     public ResponseEntity<InvestigacionDTO> getById(
             @PathVariable String idInvestigacion,
@@ -72,6 +83,7 @@ public class InvestigacionController {
 
         } else {
 
+            //Obtengo el usuario al que corresponde el ID de la investigación obtenida para confirmar si es el mismo proveido en el token
             Usuario u = usuarioRepository.getReferenceById(i.getIdInvestigador());
 
             if(authentication.getAuthorities()
@@ -86,6 +98,11 @@ public class InvestigacionController {
 
     }
 
+    /*
+    Función encargada de obtener todas las investigaciones dentro de la base de datos,
+    llamando a investigacionService para que obtenga la lista completa con todas las
+    investigaciones registradas y sea devuelta junto con la respuesta.
+     */
     @GetMapping("/")
     public ResponseEntity<List<InvestigacionDTO>> getAll() {
 
@@ -104,6 +121,10 @@ public class InvestigacionController {
 
     }
 
+    /*
+    Función encargada de actualizar una de las investigaciones dentro de la base de datos por ID,
+    llamando a investigacionService para realizar la actualización si se cumplen los requisitos.
+     */
     @PutMapping("/{idInvestigacion}")
     public ResponseEntity<InvestigacionDTO> update(
             @RequestBody InvestigacionDTO investigacionDTO,
@@ -119,6 +140,11 @@ public class InvestigacionController {
 
         }
 
+        /*
+        Primero se realiza un getById para obtener la información de la investigación a
+        actualizar, la cual se verá actualizada o no dependiendo de si el token proveido
+        cumple los criterios
+         */
         InvestigacionDTO i = investigacionService.getById(idInvestigacion);
 
         if(i == null) {
@@ -127,12 +153,14 @@ public class InvestigacionController {
 
         } else {
 
+            //Obtengo el usuario al que corresponde el ID de la investigación obtenida para confirmar si es el mismo proveido en el token
             Usuario u = usuarioRepository.getReferenceById(i.getIdInvestigador());
 
             if(authentication.getAuthorities()
                     .stream()
                     .anyMatch(authority -> authority.equals(new SimpleGrantedAuthority("ROLE_ADMIN"))) || authentication.getName().equals(u.getUsername())) {
 
+                //Aquí se realiza la actualización tras haber confirmado que el token de sesión es válido
                 InvestigacionDTO newI = investigacionService.update(idInvestigacion, investigacionDTO);
 
                 return new ResponseEntity<>(newI, HttpStatus.OK);
@@ -144,6 +172,11 @@ public class InvestigacionController {
 
     }
 
+    /*
+    Función encargada de eliminar una investigación de la base de datos por ID, llamando
+    a investigacionService para realizar la eliminación una vez se confirma que el token
+    cumple con todos los requisitos necesarios.
+     */
     @DeleteMapping("/{idInvestigacion}")
     public ResponseEntity<InvestigacionDTO> delete(
             @PathVariable String idInvestigacion,
@@ -158,6 +191,11 @@ public class InvestigacionController {
 
         }
 
+        /*
+        Primero se realiza un getById para obtener la información de la investigación a
+        eliminar, la cual será eliminada o no dependiendo de si el token proveido
+        cumple los criterios
+         */
         InvestigacionDTO i = investigacionService.getById(idInvestigacion);
 
         if(i == null) {
@@ -166,12 +204,14 @@ public class InvestigacionController {
 
         } else {
 
+            //Obtengo el usuario al que corresponde el ID de la investigación obtenida para confirmar si es el mismo proveido en el token
             Usuario u = usuarioRepository.getReferenceById(i.getIdInvestigador());
 
             if(authentication.getAuthorities()
                     .stream()
                     .anyMatch(authority -> authority.equals(new SimpleGrantedAuthority("ROLE_ADMIN"))) || authentication.getName().equals(u.getUsername())) {
 
+                //Aquí se realiza la eliminación tras haber confirmado que el token de sesión es válido
                 investigacionService.delete(idInvestigacion);
 
                 return new ResponseEntity<>(i, HttpStatus.NO_CONTENT);

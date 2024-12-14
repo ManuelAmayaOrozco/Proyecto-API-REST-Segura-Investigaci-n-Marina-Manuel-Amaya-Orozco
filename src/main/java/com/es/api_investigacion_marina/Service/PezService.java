@@ -17,6 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/*
+Clase Service para los Peces, donde se llevan a cabo las modificaciones y otros
+procesos que serán devueltos al controlador.
+ */
 @Service
 public class PezService {
 
@@ -29,6 +33,10 @@ public class PezService {
     @Autowired
     private InvestigacionRepository investigacionRepository;
 
+    /*
+    Función encargada de registrar un pez en la base de datos, devuelve el pez
+    registrado.
+     */
     public PezDTO create(PezDTO pezDTO) {
 
         //Comprobación idInvestigador
@@ -165,6 +173,9 @@ public class PezService {
 
     }
 
+    /*
+    Función encargada de buscar un pez por su ID y devolverlo.
+     */
     public PezDTO getById(String idPez) {
 
         // Parsear el id a Long
@@ -194,6 +205,9 @@ public class PezService {
 
     }
 
+    /*
+    Función encargada de obtener una lista de todos los peces y devolverla.
+     */
     public List<PezDTO> getAll() {
 
         List<PezDTO> listaDeDTOs = new ArrayList<>();
@@ -210,6 +224,9 @@ public class PezService {
 
     }
 
+    /*
+    Función encargada de actualizar un pez y devolver el pez actualizado.
+     */
     public PezDTO update(String idPez, PezDTO pezDTO) {
 
         // Parsear el id a Long
@@ -367,6 +384,9 @@ public class PezService {
 
     }
 
+    /*
+    Función encargada de eliminar un pez y devolver el pez eliminado.
+     */
     public PezDTO delete(String idPez) {
 
         // Parsear el id a Long
@@ -412,6 +432,9 @@ public class PezService {
 
     }
 
+    /*
+    Función para mapear un DTO de pez a pez.
+     */
     private Pez mapToPez(PezDTO pezDTO) {
 
         Pez pez = new Pez();
@@ -442,6 +465,9 @@ public class PezService {
 
     }
 
+    /*
+    Función para mapear un pez a DTO.
+     */
     private PezDTO mapToDTO(Pez pez) {
 
         PezDTO pezDTO = new PezDTO();

@@ -2,6 +2,10 @@ package com.es.api_investigacion_marina.Model;
 
 import jakarta.persistence.*;
 
+/*
+Clase que representa a un usuario de la base de datos, puede ser un usuario normal o un
+administrador.
+ */
 @Entity
 @Table(name = "usuarios")
 public class Usuario {

@@ -12,6 +12,10 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.stream.Collectors;
 
+/*
+Clase Service encargada de generar los tokens de sesión necesarios para usar la
+mayoría de endpoints de la aplicación.
+ */
 @Service
 public class TokenService {
 

@@ -1,5 +1,8 @@
 package com.es.api_investigacion_marina.DTO;
 
+/*
+Clase DTO de Usuario, usada durante la creación de un nuevo usuario, incluye solo el nombre, contraseña y el rol.
+ */
 public class UsuarioRegisterDTO {
 
     private String username;

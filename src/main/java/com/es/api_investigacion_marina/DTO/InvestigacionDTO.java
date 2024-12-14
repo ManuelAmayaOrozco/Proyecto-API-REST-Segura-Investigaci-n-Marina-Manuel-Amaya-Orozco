@@ -4,6 +4,9 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
+/*
+Clase DTO de Investigación.
+ */
 public class InvestigacionDTO {
 
     private Long idInvestigacion;
