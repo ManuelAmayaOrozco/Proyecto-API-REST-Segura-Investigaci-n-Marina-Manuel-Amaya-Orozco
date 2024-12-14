@@ -17,7 +17,7 @@ public class PezController {
     @Autowired
     private PezService pezService;
 
-    @PostMapping
+    @PostMapping("/")
     public ResponseEntity<PezDTO> create(
             @RequestBody PezDTO pezDTO
     ) {

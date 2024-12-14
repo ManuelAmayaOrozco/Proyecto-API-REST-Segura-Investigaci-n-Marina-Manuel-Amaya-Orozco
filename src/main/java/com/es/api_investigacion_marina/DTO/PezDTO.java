@@ -6,7 +6,7 @@ public class PezDTO {
 
     private Long idPez;
     private Long idInvestigador;
-    private List<InvestigacionDTO> apariciones;
+    private List<Long> apariciones;
     private String nombreComun;
     private String nombreCientifico;
     private String especie;
@@ -18,7 +18,7 @@ public class PezDTO {
 
     // Constructores
 
-    public PezDTO(Long idPez, Long idInvestigador, List<InvestigacionDTO> apariciones, String nombreComun, String nombreCientifico, String especie, String dieta, String descripcion, int ejemplares, double tamMax, boolean peligroExtincion) {
+    public PezDTO(Long idPez, Long idInvestigador, List<Long> apariciones, String nombreComun, String nombreCientifico, String especie, String dieta, String descripcion, int ejemplares, double tamMax, boolean peligroExtincion) {
         this.idPez = idPez;
         this.idInvestigador = idInvestigador;
         this.apariciones = apariciones;
@@ -32,7 +32,7 @@ public class PezDTO {
         this.peligroExtincion = peligroExtincion;
     }
 
-    public PezDTO(Long idInvestigador, List<InvestigacionDTO> apariciones, String nombreComun, String nombreCientifico, String especie, String dieta, String descripcion, int ejemplares, double tamMax, boolean peligroExtincion) {
+    public PezDTO(Long idInvestigador, List<Long> apariciones, String nombreComun, String nombreCientifico, String especie, String dieta, String descripcion, int ejemplares, double tamMax, boolean peligroExtincion) {
         this.idInvestigador = idInvestigador;
         this.apariciones = apariciones;
         this.nombreComun = nombreComun;
@@ -90,11 +90,11 @@ public class PezDTO {
         this.idInvestigador = idInvestigador;
     }
 
-    public List<InvestigacionDTO> getApariciones() {
+    public List<Long> getApariciones() {
         return apariciones;
     }
 
-    public void setApariciones(List<InvestigacionDTO> apariciones) {
+    public void setApariciones(List<Long> apariciones) {
         this.apariciones = apariciones;
     }
 

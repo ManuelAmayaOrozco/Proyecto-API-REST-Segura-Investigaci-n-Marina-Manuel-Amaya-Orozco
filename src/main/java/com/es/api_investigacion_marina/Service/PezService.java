@@ -3,6 +3,7 @@ package com.es.api_investigacion_marina.Service;
 import com.es.api_investigacion_marina.DTO.InvestigacionDTO;
 import com.es.api_investigacion_marina.DTO.PezDTO;
 import com.es.api_investigacion_marina.Exception.BadRequestException;
+import com.es.api_investigacion_marina.Exception.InternalServerErrorException;
 import com.es.api_investigacion_marina.Exception.NotFoundException;
 import com.es.api_investigacion_marina.Model.Investigacion;
 import com.es.api_investigacion_marina.Model.Pez;
@@ -13,6 +14,7 @@ import com.es.api_investigacion_marina.Repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -64,16 +66,16 @@ public class PezService {
         //Comprobación apariciones (todas las investigaciones deben existir en la BDD)
         if (!pezDTO.getApariciones().isEmpty()) {
 
-            List<InvestigacionDTO> investigacionesDTO = pezDTO.getApariciones();
+            List<Long> investigacionesDTO = pezDTO.getApariciones();
             List<Investigacion> investigaciones = investigacionRepository.findAll();
 
-            for (InvestigacionDTO iDTO : investigacionesDTO) {
+            for (Long iDTO : investigacionesDTO) {
 
                 boolean existe = false;
 
                 for (Investigacion i : investigaciones) {
 
-                    if (i.getIdInvestigacion() == iDTO.getIdInvestigacion()) {
+                    if (i.getIdInvestigacion() == iDTO) {
 
                         existe = true;
 
@@ -163,12 +165,94 @@ public class PezService {
 
     }
 
+    public PezDTO getById(String idPez) {
+
+        // Parsear el id a Long
+        Long idL = 0L;
+        try {
+            idL = Long.parseLong(idPez);
+        } catch (NumberFormatException e) {
+            throw new BadRequestException("El campo ID no tiene un formato válido.");
+        }
+
+        Pez p = null;
+        try {
+            p = pezRepository
+                    .findById(idL)
+                    .orElse(null);
+        } catch (Exception e) {
+            throw new InternalServerErrorException("Un error inesperado ha ocurrido al buscar el pez por su ID.");
+        }
+
+        if(p == null) {
+            throw new NotFoundException("No se encuentra ningún pez con el ID especificado.");
+        } else {
+
+            return mapToDTO(p);
+
+        }
+
+    }
+
     private Pez mapToPez(PezDTO pezDTO) {
+
         Pez pez = new Pez();
 
         pez.setIdPez(pezDTO.getIdPez());
-        pez.setApariciones(pezDTO.getApariciones());
+        pez.setInvestigador(usuarioRepository.getReferenceById(pezDTO.getIdInvestigador()));
+
+        List<Long> investigacionesDTO = pezDTO.getApariciones();
+        List<Investigacion> investigaciones = new ArrayList<Investigacion>();
+
+        for (Long iDTO : investigacionesDTO) {
+
+            investigaciones.add(investigacionRepository.getReferenceById(iDTO));
+
+        }
+
+        pez.setApariciones(investigaciones);
+        pez.setNombreComun(pezDTO.getNombreComun());
+        pez.setNombreCientifico(pezDTO.getNombreCientifico());
+        pez.setEspecie(pezDTO.getEspecie());
+        pez.setDieta(pezDTO.getDieta());
+        pez.setDescripcion(pezDTO.getDescripcion());
+        pez.setEjemplares(pezDTO.getEjemplares());
+        pez.setTamMax(pezDTO.getTamMax());
+        pez.setPeligroExtincion(pezDTO.isPeligroExtincion());
+
+        return pez;
 
     }
+
+    private PezDTO mapToDTO(Pez pez) {
+
+        PezDTO pezDTO = new PezDTO();
+
+        pezDTO.setIdPez(pez.getIdPez());
+        pezDTO.setIdInvestigador(pez.getInvestigador().getId());
+
+        List<Long> investigacionesDTO = new ArrayList<Long>();
+        List<Investigacion> investigaciones = pez.getApariciones();
+
+        for (Investigacion i : investigaciones) {
+
+            investigacionesDTO.add(i.getIdInvestigacion());
+
+        }
+
+        pezDTO.setApariciones(investigacionesDTO);
+        pezDTO.setNombreComun(pez.getNombreComun());
+        pezDTO.setNombreCientifico(pez.getNombreCientifico());
+        pezDTO.setEspecie(pez.getEspecie());
+        pezDTO.setDieta(pez.getDieta());
+        pezDTO.setDescripcion(pez.getDescripcion());
+        pezDTO.setEjemplares(pez.getEjemplares());
+        pezDTO.setTamMax(pez.getTamMax());
+        pezDTO.setPeligroExtincion(pez.isPeligroExtincion());
+
+        return pezDTO;
+
+    }
+
 
 }

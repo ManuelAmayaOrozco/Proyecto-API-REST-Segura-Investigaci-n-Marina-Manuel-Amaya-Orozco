@@ -35,7 +35,7 @@ public class Pez {
 
     private int ejemplares;
 
-    @Column(name = "tamaño_maximo")
+    @Column(name = "tamanio_maximo")
     private double tamMax;
 
     @Column(name = "peligro_extincion")
