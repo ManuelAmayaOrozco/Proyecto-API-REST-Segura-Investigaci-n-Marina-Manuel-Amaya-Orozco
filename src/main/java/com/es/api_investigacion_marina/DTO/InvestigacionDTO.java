@@ -8,7 +8,7 @@ public class InvestigacionDTO {
 
     private Long idInvestigacion;
     private Long idInvestigador;
-    private List<PezDTO> peces;
+    private List<Long> peces;
     private String titulo;
     private String resumen;
     private String lugar;
@@ -17,7 +17,7 @@ public class InvestigacionDTO {
 
     // Constructores
 
-    public InvestigacionDTO(Long idInvestigacion, Long idInvestigador, List<PezDTO> peces, String titulo, String resumen, String lugar, LocalDate fecha, LocalTime hora) {
+    public InvestigacionDTO(Long idInvestigacion, Long idInvestigador, List<Long> peces, String titulo, String resumen, String lugar, LocalDate fecha, LocalTime hora) {
         this.idInvestigacion = idInvestigacion;
         this.idInvestigador = idInvestigador;
         this.peces = peces;
@@ -28,7 +28,7 @@ public class InvestigacionDTO {
         this.hora = hora;
     }
 
-    public InvestigacionDTO(Long idInvestigador, List<PezDTO> peces, String titulo, String resumen, String lugar, LocalDate fecha, LocalTime hora) {
+    public InvestigacionDTO(Long idInvestigador, List<Long> peces, String titulo, String resumen, String lugar, LocalDate fecha, LocalTime hora) {
         this.idInvestigador = idInvestigador;
         this.peces = peces;
         this.titulo = titulo;
@@ -77,11 +77,11 @@ public class InvestigacionDTO {
         this.idInvestigador = idInvestigador;
     }
 
-    public List<PezDTO> getPeces() {
+    public List<Long> getPeces() {
         return peces;
     }
 
-    public void setPeces(List<PezDTO> peces) {
+    public void setPeces(List<Long> peces) {
         this.peces = peces;
     }
 

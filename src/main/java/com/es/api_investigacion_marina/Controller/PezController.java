@@ -1,8 +1,6 @@
 package com.es.api_investigacion_marina.Controller;
 
 import com.es.api_investigacion_marina.DTO.PezDTO;
-import com.es.api_investigacion_marina.DTO.UsuarioDTO;
-import com.es.api_investigacion_marina.DTO.UsuarioRegisterDTO;
 import com.es.api_investigacion_marina.Exception.BadRequestException;
 import com.es.api_investigacion_marina.Exception.InternalServerErrorException;
 import com.es.api_investigacion_marina.Exception.NotFoundException;

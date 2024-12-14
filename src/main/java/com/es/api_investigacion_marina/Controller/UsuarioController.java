@@ -87,14 +87,29 @@ public class UsuarioController {
             Principal principal
     ) {
 
+        // Compruebo que el id no es null
+        if (idUser == null) {
+
+            throw new BadRequestException("El campo ID no tiene un formato válido.");
+
+        }
+
         UsuarioDTO usuarioDTO = customUserDetailsService.getByID(idUser);
 
-        if(authentication.getAuthorities()
-                .stream()
-                .anyMatch(authority -> authority.equals(new SimpleGrantedAuthority("ROLE_ADMIN"))) || authentication.getName().equals(usuarioDTO.getUsername())) {
-            return new ResponseEntity<>(usuarioDTO, HttpStatus.OK);
+        if (usuarioDTO == null) {
+
+            throw new NotFoundException("No se encuentra ningún usuario con el ID especificado.");
+
         } else {
-            throw new NotAuthorizedException("No tienes los permisos para acceder al recurso");
+
+            if (authentication.getAuthorities()
+                    .stream()
+                    .anyMatch(authority -> authority.equals(new SimpleGrantedAuthority("ROLE_ADMIN"))) || authentication.getName().equals(usuarioDTO.getUsername())) {
+                return new ResponseEntity<>(usuarioDTO, HttpStatus.OK);
+            } else {
+                throw new NotAuthorizedException("No tienes los permisos para acceder al recurso");
+            }
+
         }
 
     }
