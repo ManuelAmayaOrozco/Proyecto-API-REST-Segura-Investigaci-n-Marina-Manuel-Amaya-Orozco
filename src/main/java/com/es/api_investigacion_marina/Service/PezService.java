@@ -194,6 +194,22 @@ public class PezService {
 
     }
 
+    public List<PezDTO> getAll() {
+
+        List<PezDTO> listaDeDTOs = new ArrayList<>();
+
+        List<Pez> listaPez = pezRepository.findAll();
+
+        for (Pez p: listaPez) {
+
+            listaDeDTOs.add(mapToDTO(p));
+
+        }
+
+        return listaDeDTOs;
+
+    }
+
     private Pez mapToPez(PezDTO pezDTO) {
 
         Pez pez = new Pez();

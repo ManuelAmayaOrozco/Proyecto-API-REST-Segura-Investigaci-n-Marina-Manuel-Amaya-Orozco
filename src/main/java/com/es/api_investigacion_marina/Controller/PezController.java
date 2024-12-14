@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/peces")
 public class PezController {
@@ -58,6 +60,24 @@ public class PezController {
         } else {
 
             ResponseEntity<PezDTO> respuesta = new ResponseEntity<PezDTO>(
+                    p, HttpStatus.OK
+            );
+            return respuesta;
+        }
+
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<List<PezDTO>> getAll() {
+
+        List<PezDTO> p = pezService.getAll();
+
+        if(p == null) {
+
+            throw new NotFoundException("No se encuentra ningún pez para mostrar.");
+
+        } else {
+            ResponseEntity<List<PezDTO>> respuesta = new ResponseEntity<List<PezDTO>>(
                     p, HttpStatus.OK
             );
             return respuesta;
