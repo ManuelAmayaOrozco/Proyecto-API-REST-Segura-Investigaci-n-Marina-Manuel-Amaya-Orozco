@@ -1,11 +1,10 @@
 package com.es.api_investigacion_marina.Controller;
 
 import com.es.api_investigacion_marina.DTO.InvestigacionDTO;
-import com.es.api_investigacion_marina.DTO.PezDTO;
 import com.es.api_investigacion_marina.Exception.BadRequestException;
+import com.es.api_investigacion_marina.Exception.InternalServerErrorException;
 import com.es.api_investigacion_marina.Exception.NotAuthorizedException;
 import com.es.api_investigacion_marina.Exception.NotFoundException;
-import com.es.api_investigacion_marina.Model.Investigacion;
 import com.es.api_investigacion_marina.Model.Usuario;
 import com.es.api_investigacion_marina.Repository.UsuarioRepository;
 import com.es.api_investigacion_marina.Service.InvestigacionService;
@@ -14,10 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
@@ -31,6 +27,26 @@ public class InvestigacionController {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @PostMapping("/")
+    public ResponseEntity<InvestigacionDTO> create(
+            @RequestBody InvestigacionDTO investigacionDTO
+    ) {
+
+        InvestigacionDTO i = investigacionService.create(investigacionDTO);
+
+        if(i == null) {
+
+            throw new InternalServerErrorException("Un error inesperado ha ocurrido al intentar registrar la investigación.");
+
+        } else {
+            ResponseEntity<InvestigacionDTO> respuesta = new ResponseEntity<InvestigacionDTO>(
+                    i, HttpStatus.CREATED
+            );
+            return respuesta;
+        }
+
+    }
 
     @GetMapping("/{idInvestigacion}")
     public ResponseEntity<InvestigacionDTO> getById(
